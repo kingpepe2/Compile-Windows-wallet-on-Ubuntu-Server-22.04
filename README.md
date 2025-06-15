@@ -1,49 +1,42 @@
-Tutorial - Compile Windows wallet on Ubuntu Server 22.04
+# 🧰 Tutorial - Compile Windows Wallet on Ubuntu Server 22.04
+
 Compile a wallet for Microsoft Windows on Ubuntu Server 22.04 with the following tutorial.
 
-Update your Ubuntu server with the following command:
+---
 
+### ✅ Step-by-step Commands:
+
+```bash
+# Update Ubuntu
 sudo apt-get update && sudo apt-get upgrade -y
 
-Install the required dependencies with the following command:
-
+# Install base dependencies
 sudo apt-get install make automake cmake curl g++-multilib libtool binutils-gold bsdmainutils pkg-config python3 patch bison -y
 
-Create your source code directory with the following commands:
-
-cd ~/
+# Create source directory
+cd ~
 mkdir source_code
 cd source_code
 
-Download the source code of your coin with the following command:
-
+# Download source code
 wget "https://dl.walletbuilders.com/download?customer=7fd7ad0365703844c530ed1b76f8838f9e81a832a1178f1a56&filename=kingpepe-source.tar.gz" -O kingpepe-source.tar.gz
 
-Type the following command to extract the tar file:
-
+# Extract source
 tar -xzvf kingpepe-source.tar.gz
 
-64-bit
-
-Install the required dependencies with the following command:
-
+# Install 64-bit Windows compiler
 sudo apt-get install g++-mingw-w64-x86-64 -y
 
-Set the default x86_64-w64-mingw32-g++ compiler option to posix with the following command:
-
+# Set compiler to POSIX mode
 sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
-Build x86_64-w64-mingw32 with the following commands:
-
+# Build dependencies for Windows target
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
 cd depends
 make HOST=x86_64-w64-mingw32
 cd ..
 
-Type the following commands to compile your 64 bit wallet for Microsoft Windows.
-
+# Configure and compile
 ./autogen.sh
 CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
 make
-
-The compiled wallet for Microsoft Windows is located in the directory src/qt, the tools are located in the directory src.
